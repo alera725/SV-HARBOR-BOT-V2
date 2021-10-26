@@ -4,6 +4,12 @@ Created on Wed Aug 26 12:51:58 2020
 
 @author: alejandro.gutierrez
 """
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 26 12:51:58 2020
+
+@author: alejandro.gutierrez
+"""
 
 #Importar paqueterias
 import os
@@ -24,6 +30,7 @@ import datetime
 #from calendar import monthrange
 import calendar
 import json
+import glob
 
 #import time 
 #import datetime
@@ -78,12 +85,12 @@ class Download_SuperValue_Data(unittest.TestCase):
         email = self.email  
         pswd = self.pswd # Silver654 'Orange987'   #CAMBIAR CONTRASE;A Indigo987 HALLOWEEN 1 JULIO AL DIA QUE SE SAQUE EL REPORTE (LUNES EN LA MANANA O A LAS 12.30)
         
-        #Seleccionamos el retailer deseado
+        #Seleccionamos el retailer deseado AGREGAR MELITTA Y PERDUE O VER SI ESTAN EN ESTA LISTA Y AGREGARLOS AL MOMENTO DE HACER LOS ARCHIVOS DE POSTGRESQL
         retailers = ['7556838', '5983846', '7576696', '682484', '7360407', '157008', '5752092', '7354383', '133181', '7528374', '293894',
                      '7397373', '647438', '5068390', '699421', '7126469', '7390112', '432625', '7614403', '7544402', '5290002', '7570839',
                      '460865', '7574550', '782490', '7388212', '7389454', '385666', '7533421', '7597929', '6958565', '740951', '5153309',
                      '754507', '7553720', '7550276', '7352064', '194423', '616235', '7396567', '130192', '880450', '392571', '7341589',
-                     '7507868', '7353576'] #' Montlhy DC' # 38811 - Plb Sports Inc' #'all' #or ' 24158 - American Licorice Co' or 'all'
+                     '7507868', '7353576', '237818', '5372412', ] #' Montlhy DC' # 38811 - Plb Sports Inc' #'all' #or ' 24158 - American Licorice Co' or 'all'
         
         #!!!!! Fecha de hoy !!!!!
         today = date.today()
@@ -555,7 +562,7 @@ class Download_SuperValue_Data(unittest.TestCase):
         self.PageProcess.set_vendor(retailers,1)
         self.PageProcess.set_date_range(fecha_inicio_format,fecha_fin_format)
         self.PageProcess.download_page()
-        time.sleep(5)
+        time.sleep(10)
         
         #Esperar a que la descarga se complete
         after = os.listdir(self.dir_download) 
@@ -569,7 +576,16 @@ class Download_SuperValue_Data(unittest.TestCase):
             else:
                 continue
                     
-        time.sleep(200) #REDUCIR ESTE TIEMPO DE ESPERA
+        time.sleep(1000) #REDUCIR ESTE TIEMPO DE ESPERA
+        
+        #NUEVO 
+        #Encontrar el archivo mas reciente en el path y abrirlo
+        #folder_path = self.dir_download 
+        #file_type = '\*xlsx'
+        #files = glob.glob(folder_path + file_type)
+        #max_file = max(files, key=os.path.getctime)
+        
+        
         #CHECAR LA ULTIMA DESCARGA (PARA CAMBIAR EL NOMBRE A LA ULTIMA DESCARGA)
         Current_Date = datetime.datetime.now().strftime("%d-%b-%Y %HHr %MMin") 
         Initial_path = self.dir_download 
@@ -633,8 +649,8 @@ class Download_SuperValue_Data(unittest.TestCase):
         #Ingresar el rango de fechas que se busca descargar mm/dd/yyyy ultimo mes
         fecha_inicio =  '12/27/20' #'08/01/20'
         print(fecha_inicio)
-        #fecha_fin = month + '/' + str(day) + '/' + year[2:4]  #'08/31/20'
-        fecha_fin = '09/04/21'
+        fecha_fin = month + '/' + str(day) + '/' + year[2:4]  #'08/31/20'
+        #fecha_fin = '09/04/21'
         print(fecha_fin)
         
         fecha_inicio_format = fecha_inicio.replace("/", "") #'080120'
@@ -665,7 +681,7 @@ class Download_SuperValue_Data(unittest.TestCase):
             else:
                 continue
                     
-        time.sleep(200) #REDUCIR ESTE TIEMPO DE ESPERA
+        time.sleep(150) #REDUCIR ESTE TIEMPO DE ESPERA
         #CHECAR LA ULTIMA DESCARGA (PARA CAMBIAR EL NOMBRE A LA ULTIMA DESCARGA)
         Initial_path = self.dir_download 
         filename = max([Initial_path + "\\" + f for f in os.listdir(Initial_path)],key=os.path.getctime)
@@ -702,6 +718,18 @@ class Download_SuperValue_Data(unittest.TestCase):
         
 if __name__ == '__main__':
     unittest.main()
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
        
         
         
